@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
-// some comments
+// Class to hold and format the display of indevidual movie items
 class MovieItem extends Component {
     render() {
         return (
             <div>
-                {/* some comments  */}
+                {/* Using built in react component to format display  */}
                 <Card>
                     <Card.Header>{this.props.movie.Title}</Card.Header>
                     <Card.Body>
