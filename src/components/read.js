@@ -11,7 +11,7 @@ class Read extends Component
         axios.get('http://localhost:4000/api/movies')
          //This is the promise. Once the data is obtained, then update the state
         .then((response)=>{
-            this.setState({mymovies: response.data.mymovies})
+            this.setState({mymovies: response.data})
         })
         //This is going to be an error function if .then does not work
         .catch((error)=>{

@@ -7,12 +7,12 @@ class MovieItem extends Component {
             <div>
                 {/* Using built in react component to format display  */}
                 <Card>
-                    <Card.Header>{this.props.movie.Title}</Card.Header>
+                    <Card.Header>{this.props.movie.title}</Card.Header>
                     <Card.Body>
                         <blockquote>
-                            <img src={this.props.movie.Poster}></img>
+                            <img src={this.props.movie.poster}></img>
                             <footer>
-                                {this.props.movie.Year}
+                                {this.props.movie.year}
                             </footer>
                         </blockquote>
                     </Card.Body>
