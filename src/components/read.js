@@ -26,7 +26,7 @@ class Read extends Component
     render(){
         return(
             <div>
-                <h1>This is my Read component!</h1>
+                <h1>This is my read component</h1>
                 <Movies films={this.state.mymovies}></Movies>
             </div>
         );

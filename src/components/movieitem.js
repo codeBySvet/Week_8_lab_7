@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
+import {Link} from 'react-router-dom';
+
+
 // Class to hold and format the display of indevidual movie items
-class MovieItem extends Component {
+export class MovieItem extends Component {
     render() {
         return (
             <div>
@@ -16,6 +19,8 @@ class MovieItem extends Component {
                             </footer>
                         </blockquote>
                     </Card.Body>
+                    <Link to={"/edit/"+ this.props.movie._id} className="btn btn-primary">Edit</Link>
+
                 </Card>
             </div>
         );

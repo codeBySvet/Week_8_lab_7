@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios"; //gives us the ability to talk HTML(needed to process POST html requests)
 
 // Class for the home page of the navbar containing the content of the component
-class Create extends Component {
+export class Edit extends React.Component {
     constructor() {
         super();
         //Binding events to constructor. It is required to perform handleSubmit and OnChange
@@ -18,7 +18,23 @@ class Create extends Component {
             Poster: ''
         }
     }
-    //This function will receive the form data
+    //load data from a remote endpoint
+    componentDidMount(){
+        axios.get('http://localhost:4000/api/movies/'+this.props.match.params.id)
+        .then(response =>{
+            this.setState({
+                _id:response.data._id,
+                Title:response.data.title,
+                Year:response.data.year,
+                Poster:response.data.poster,
+
+            })
+        })
+        .catch((error)=>{
+            console.log(error);
+        });
+    }
+    //This function will receive the form data 
     handleSubmit(event) {
         console.log("Name: " + this.state.Title +
             " Year: " + this.state.Year +
@@ -28,16 +44,17 @@ class Create extends Component {
         const NewMovie = {
             Title: this.state.Title,
             Year: this.state.Year,
-            Poster: this.state.Poster
+            Poster: this.state.Poster,
+            _id:this.state._id
         }
-        //This handles posting to the local variables to the server
-        axios.post('http://localhost:4000/api/movies', NewMovie)
-            .then((data) => {
-                console.log(data);
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+
+        //This updates the data in the database using a put request
+        axios.put('http://localhost:4000/api/movies/'+this.state._id,NewMovie)
+        .then(res=>{
+            console.log(res.data)
+        })
+        .catch();
+
         //stop this method from being run when not called
         event.preventDefault();
 
@@ -70,7 +87,7 @@ class Create extends Component {
     render() {
         return (
             <div>
-                <h1>This is my Create Component!</h1>
+                <h1>Edit</h1>
                 {/* When submitted, run this method */}
                 <form onSubmit={this.handleSubmit}>
 
@@ -105,8 +122,9 @@ class Create extends Component {
                             onChange={this.onChangeMoviePoster}
                         />
                     </div>
-                    <div>
-                        <input type="submit" value="Add Movie"
+                    <div className="form-group">
+                        <input type="submit" 
+                        value="Add Movie"
                             className="btn btn-primary"></input>
                     </div>
                 </form>
@@ -114,4 +132,4 @@ class Create extends Component {
         );
     }
 }
-export default Create;
+export default Edit;

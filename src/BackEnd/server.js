@@ -23,6 +23,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 //  Connecting to MongoDB database
+//const ConnectionString = 'mongodb+srv://admin:admin@cluster0.8taek.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+
 const ConnectionString = "mongodb+srv://anshlom4321:anshlom4321@cluster0.mfk7y.mongodb.net/movies?retryWrites=true&w=majority";
 mongoose.connect(ConnectionString, { useNewUrlParser: true });
 
@@ -71,41 +73,31 @@ app.post('/api/movies', (req, res) => {
 
 //Json requst/response for /api.movies.
 app.get('/api/movies', (req, res) => {
-    // const movies = [
-    //     {
-    //         "Title": "Avengers: Infinity War",
-    //         "Year": "2018",
-    //         "imdbID": "tt4154756",
-    //         "Type": "movie",
-    //         "Poster": "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_SX300.jpg"
-    //     },
-    //     {
-    //         "Title": "Captain America: Civil War",
-    //         "Year": "2016",
-    //         "imdbID": "tt3498820",
-    //         "Type": "movie",
-    //         "Poster": "https://m.media-amazon.com/images/M/MV5BMjQ0MTgyNjAxMV5BMl5BanBnXkFtZTgwNjUzMDkyODE@._V1_SX300.jpg"
-    //     },
-    //     {
-    //         "Title": "World War Z",
-    //         "Year": "2013",
-    //         "imdbID": "tt0816711",
-    //         "Type": "movie",
-    //         "Poster": "https://m.media-amazon.com/images/M/MV5BNDQ4YzFmNzktMmM5ZC00MDZjLTk1OTktNDE2ODE4YjM2MjJjXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
-    //     },
-    //     {
-    //         "Title": "War of the Worlds",
-    //         "Year": "2005",
-    //         "imdbID": "tt0407304",
-    //         "Type": "movie",
-    //         "Poster": "https://m.media-amazon.com/images/M/MV5BNDUyODAzNDI1Nl5BMl5BanBnXkFtZTcwMDA2NDAzMw@@._V1_SX300.jpg"
-    //      }
-    // ]
 
     //Find all records in the database and return
     MovieModel.find((err,data)=>{
         res.json(data)
     })
+})
+
+//Json requst/response for /api.movies/:id finding by ID
+app.get('/api/movies/:id', (req, res) => {
+
+    MovieModel.findById(req.params.id,(err,data)=>{
+        res.json(data)
+    })
+})
+
+//Json PUT method for specific movie to replace movie data
+app.put("/api/movies/:id", (req,res)=>{
+    MovieModel.findByIdAndUpdate(req.params.id,req.body, {new:true},
+      (err,data)=>{
+          if(err){
+            console.log(err)
+          }
+        res.send(data);
+      } )
+
 })
 
 //Json get requst/response for /name
